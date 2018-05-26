@@ -1,59 +1,55 @@
-var movies = [
-  {title: 'Mean Girls'},
-  {title: 'Hackers'},
-  {title: 'The Grey'},
-  {title: 'Sunshine'},
-  {title: 'Ex Machina'},
-];
-
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			movies: movies,
-			filter: movies
+			movies: [],
+			current: []
 		}
 
 		this.getSearchValue = this.getSearchValue.bind(this);
 		this.searchData = this.searchData.bind(this);
 		this.showAllMovies = this.showAllMovies.bind(this);
-		this.movieTitle = this.movieTitle.bind(this);
+		this.setMovieTitle = this.setMovieTitle.bind(this);
+		this.addMovie = this.addMovie.bind(this);
+	}
+
+	showAllMovies() {
+		var allMovies = this.state.movies.slice();
+		this.setState({current: allMovies});
 	}
 
 	getSearchValue(e) {
 		this.setState({search: e.target.value});
-		console.log(this.state);
 	}
 
 	searchData() {
 		var filtered = this.state.movies.filter(movie => movie.title.includes(this.state.search));
-		this.setState({filter: filtered});
+		this.setState({current: filtered});
 		console.log(this.state)
 	}
 
-	showAllMovies() {
+	setMovieTitle(e) {
+		this.setState({setMovieTitle: e.target.value});
+	}
+
+	addMovie() {
+		console.log('added');
 		var allMovies = this.state.movies;
-		this.setState({filter: allMovies});
+		var currentMovies = this.state.current;
+		currentMovies.push({title: this.state.setMovieTitle});
+		allMovies.push({title: this.state.setMovieTitle});
+		this.setState({current: currentMovies, movies: allMovies});
 	}
 
-	addMovies() {
-		var movieTitle = this.state.movies
-		movieTitle.push(this.state.addTitle);
-		this.setState({movies: movieTitle});
-	}
-
-	movieTitle(e) {
-		this.setState({addTitle: e.target.value});
-	}
 
 	render() {
 		// var currentMovies = this.state.filter
 		return (
 				<div>
-					<AddMovies movieTitle={this.movieTitle} add={this.addMovies}/>
+					<AddMovies setMovieTitle={this.setMovieTitle} addMovie={this.addMovie}/>
 					<Search search={this.getSearchValue} submit={this.searchData}/><button onClick={this.showAllMovies}>Show All</button>
-					<div className="moviesList" movies={this.state.movies}>
-						{this.state.movies.map((elem) => <MoviesList key={elem.title} movie={elem}/>)}
+					<div className="moviesList" movies={this.state.current}>
+						{this.state.current.map((elem, index) => <MoviesList key={index} movie={elem}/>)}
 					</div>
 				</div>
 		)
