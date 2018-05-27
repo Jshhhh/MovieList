@@ -3,7 +3,8 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			movies: [],
-			current: []
+			current: [],
+			searchable: true
 		}
 
 		this.getSearchValue = this.getSearchValue.bind(this);
@@ -24,7 +25,15 @@ class App extends React.Component {
 
 	searchMovies() {
 		var filtered = this.state.movies.filter(movie => movie.title.includes(this.state.search));
-		this.setState({current: filtered});
+		if (filtered.length === 0) {
+			this.setState({searchable: false});
+		} else {
+			this.setState({searchable: true});
+		}
+		this.setState((prev) => {
+
+			return {current: prev.current.filter(movie => movie.title.includes(this.state.search))}
+		});
 		console.log(this.state)
 	}
 
@@ -33,7 +42,6 @@ class App extends React.Component {
 	}
 
 	addMovie() {
-		console.log('added');
 		var allMovies = this.state.movies;
 		var currentMovies = this.state.current;
 		currentMovies.push({title: this.state.setMovieTitle});
@@ -46,13 +54,13 @@ class App extends React.Component {
 	render() {
 			var currentMovies = this.state.current.map((elem, index) => <MoviesList key={index} movie={elem}/>);
 		return (
-				<div>
-					<AddMovies setMovieTitle={this.setMovieTitle} addMovie={this.addMovie}/>
-					<Search search={this.getSearchValue} submit={this.searchMovies}/><button onClick={this.showAllMovies}>Show All</button>
-					<div className="moviesList" movies={this.state.current}>
-						{currentMovies}
-					</div>
+			<div>
+				<AddMovies setMovieTitle={this.setMovieTitle} addMovie={this.addMovie}/>
+				<Search search={this.getSearchValue} submit={this.searchMovies}/><button onClick={this.showAllMovies}>Show All</button>
+				<div className="moviesList" movies={this.state.current}>
+					{(this.state.searchable) ? currentMovies : <div className="noResults">No movie by that name found</div>}
 				</div>
+			</div>
 		)
 	}
 }

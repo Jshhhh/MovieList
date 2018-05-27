@@ -25,3 +25,7 @@
 	color: #004085;
 	background-color: rgba(0,123,255,.5);
 }
+
+.noResults {
+	color: rgb(233, 75, 60);
+}
