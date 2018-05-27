@@ -32,7 +32,7 @@ class App extends React.Component {
 		}
 		this.setState((prev) => {
 
-			return {current: prev.current.filter(movie => movie.title.includes(this.state.search))}
+			return {current: prev.movies.filter(movie => movie.title.includes(this.state.search))}
 		});
 		console.log(this.state)
 	}
