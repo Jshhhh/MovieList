@@ -7,7 +7,7 @@ class App extends React.Component {
 		}
 
 		this.getSearchValue = this.getSearchValue.bind(this);
-		this.searchData = this.searchData.bind(this);
+		this.searchMovies = this.searchMovies.bind(this);
 		this.showAllMovies = this.showAllMovies.bind(this);
 		this.setMovieTitle = this.setMovieTitle.bind(this);
 		this.addMovie = this.addMovie.bind(this);
@@ -22,14 +22,14 @@ class App extends React.Component {
 		this.setState({search: e.target.value});
 	}
 
-	searchData() {
+	searchMovies() {
 		var filtered = this.state.movies.filter(movie => movie.title.includes(this.state.search));
 		this.setState({current: filtered});
 		console.log(this.state)
 	}
 
 	setMovieTitle(e) {
-		this.setState({setMovieTitle: e.target.value});
+		this.setState({setMovieTitle: e.target.value, movieInputNode: e.target});
 	}
 
 	addMovie() {
@@ -39,17 +39,18 @@ class App extends React.Component {
 		currentMovies.push({title: this.state.setMovieTitle});
 		allMovies.push({title: this.state.setMovieTitle});
 		this.setState({current: currentMovies, movies: allMovies});
+		this.state.movieInputNode.value = '';
 	}
 
 
 	render() {
-		// var currentMovies = this.state.filter
+			var currentMovies = this.state.current.map((elem, index) => <MoviesList key={index} movie={elem}/>);
 		return (
 				<div>
 					<AddMovies setMovieTitle={this.setMovieTitle} addMovie={this.addMovie}/>
-					<Search search={this.getSearchValue} submit={this.searchData}/><button onClick={this.showAllMovies}>Show All</button>
+					<Search search={this.getSearchValue} submit={this.searchMovies}/><button onClick={this.showAllMovies}>Show All</button>
 					<div className="moviesList" movies={this.state.current}>
-						{this.state.current.map((elem, index) => <MoviesList key={index} movie={elem}/>)}
+						{currentMovies}
 					</div>
 				</div>
 		)
