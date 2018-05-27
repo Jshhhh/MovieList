@@ -5,6 +5,26 @@
 	align-items: center;
 }
 
+.controller {
+	display: flex;
+	justify-content: space-around;
+}
+
+.submit {
+	border-radius: 10px;
+	margin-left: 5px;
+	color: #004085;
+	background-color: rgba(0,123,255,.5);
+}
+
+.noResults {
+	color: rgb(233, 75, 60);
+}
+
+.Search {
+	padding-left: 10px;
+}
+
 #movie {
 	display: flex;
 	justify-content: flex-start;
@@ -18,14 +38,4 @@
 	border-color: rgb(123, 180, 199);
 	background-color: rgba(0,123,255,.5);
 	width: 300px;
-}
-
-#submit {
-	border-radius: 10px;
-	color: #004085;
-	background-color: rgba(0,123,255,.5);
-}
-
-.noResults {
-	color: rgb(233, 75, 60);
 }

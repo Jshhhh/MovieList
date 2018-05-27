@@ -1,8 +1,8 @@
 var AddMovies = (props) => {
 	return (
-		<div>
+		<div id="AddMovies">
 			<input onChange={props.setMovieTitle} type="text" placeholder="Add Movie Title..."/>
-			<input type="button" value="Add Movie" onClick={props.addMovie}/>
+			<input className="submit" type="button" value="Add Movie" onClick={props.addMovie}/>
 		</div>
 	)
 }

@@ -16,7 +16,7 @@ class App extends React.Component {
 
 	showAllMovies() {
 		var allMovies = this.state.movies.slice();
-		this.setState({current: allMovies});
+		this.setState({current: allMovies, searchable: true});
 	}
 
 	getSearchValue(e) {
@@ -34,7 +34,6 @@ class App extends React.Component {
 
 			return {current: prev.movies.filter(movie => movie.title.includes(this.state.search))}
 		});
-		console.log(this.state)
 	}
 
 	setMovieTitle(e) {
@@ -50,21 +49,21 @@ class App extends React.Component {
 		this.state.movieInputNode.value = '';
 	}
 
-
 	render() {
-			var currentMovies = this.state.current.map((elem, index) => <MoviesList key={index} movie={elem}/>);
+			var currentMovies = this.state.current.map((elem, index) => <Movie key={index} movie={elem}/>);
 		return (
 			<div>
-				<AddMovies setMovieTitle={this.setMovieTitle} addMovie={this.addMovie}/>
-				<Search search={this.getSearchValue} submit={this.searchMovies}/><button onClick={this.showAllMovies}>Show All</button>
-				<div className="moviesList" movies={this.state.current}>
+				<div className="controller">
+					<AddMovies setMovieTitle={this.setMovieTitle} addMovie={this.addMovie}/>
+					<Search search={this.getSearchValue} submit={this.searchMovies}/>
+					<button className="submit" onClick={this.showAllMovies}>Show All</button>
+				</div>
+				<div className="moviesList">
 					{(this.state.searchable) ? currentMovies : <div className="noResults">No movie by that name found</div>}
 				</div>
 			</div>
 		)
 	}
 }
-
-window.App = App;
 
 ReactDOM.render(<App/>, document.getElementById('movies'));

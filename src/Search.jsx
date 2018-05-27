@@ -4,9 +4,9 @@ class Search extends React.Component {
 	}
 	render() {
 		return (
-			<div className="d-flex justify-content-center">
+			<div className="Search">
 				<input type="text" onChange={this.props.search} id="searchBar" placeholder="Search..."/>
-				<input style={{marginLeft: 10}} onClick={this.props.submit} type="button" value="Submit" id="submit"/>
+				<input onClick={this.props.submit} type="button" value="Search" className="submit"/>
 			</div>
 		)
 	}
